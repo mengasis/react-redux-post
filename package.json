@@ -1,0 +1,17 @@
+{
+  "name": "react-redux-post",
+  "version": "0.1.0",
+  "main": "index.js",
+  "repository": "https://github.com/mengasis/react-redux-post.git",
+  "author": "Manuel Venegas <mengasis@outlook.com>",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-router-dom": "^4.1.2"
+  },
+  "devDependencies": {
+    "eslint": "^4.4.0",
+    "eslint-plugin-react": "^7.1.0"
+  }
+}
