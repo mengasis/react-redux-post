@@ -1,9 +1,10 @@
 import http from 'http'
 import React from 'react'
-import {renderToString} from 'react-dom/server'
+import { renderToString, renderToStaticMarkup } from 'react-dom/server'
 import { StaticRouter } from 'react-router-dom'
 
 import AppRoutes from './containers/AppRoutes'
+import Layout from './components/Layout'
 
 const requestHandler = (req, res) => {
 
@@ -21,7 +22,9 @@ const requestHandler = (req, res) => {
 		res.end()
 	}
     
-	res.write(html)
+	res.write(
+		renderToStaticMarkup(<Layout title="App" content={html}/>)
+	)
 	res.end()
 }
 

@@ -6,7 +6,8 @@
   "author": "Manuel Venegas <mengasis@outlook.com>",
   "license": "MIT",
   "scripts": {
-    "start": "webpack -w"
+    "start": "webpack -w",
+    "serve": "nodemon dist/bundle.js"
   },
   "dependencies": {
     "isomorphic-fetch": "^2.2.1",
@@ -24,6 +25,7 @@
     "css-loader": "^0.28.4",
     "eslint": "^4.4.0",
     "eslint-plugin-react": "^7.1.0",
+    "nodemon": "^1.11.0",
     "webpack": "^3.4.1"
   }
 }
