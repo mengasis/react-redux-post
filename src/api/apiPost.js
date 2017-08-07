@@ -1,6 +1,8 @@
 import api from './api'
 
 export async function getAllPosts() {
+	console.log('Entrando Post API')
+
 	const response = await api.apiFetch('post')
 	const data = await response.json()
 
