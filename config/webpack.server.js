@@ -1,7 +1,8 @@
 const path = require('path')
+require('babel-polyfill')
 
 module.exports = {
-	entry: './src/server.js',
+	entry: ['babel-polyfill', './src/server.js'],
 	output: {
 		filename: 'bundle.js',
 		path: path.resolve('dist')

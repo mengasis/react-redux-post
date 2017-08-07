@@ -1,10 +1,10 @@
 const path = require('path')
 
 module.exports = {
-	entry: './src/client.js',
+	entry: ['babel-polyfill', './src/client.js'],
 	output: {
 		filename: 'app.js',
-		path: path.resolve('dist')
+		path: path.resolve('dist/static')
 	},
 	module: {
 		rules: [
@@ -21,8 +21,8 @@ module.exports = {
 				use: {
 					loader: 'babel-loader',
 					options: {
-						presets: ['env', 'react']
-					}
+						presets: ['env', 'react'],
+						plugins: ['transform-es2015-modules-commonjs']					}
 				}
 			}
 		]
