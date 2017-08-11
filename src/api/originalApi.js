@@ -11,7 +11,12 @@ const api = {
 			const data = await response.json()
 			return data
 		},
-		async getSingle(id = 1) {
+		async getAll() {
+			const response = await fetch(`${baseUrl}/posts`)
+			const data = await response.json()
+			return data
+		},
+		async getPost(id = 1) {
 			const response = await fetch(`${baseUrl}/posts/${id}`)
 			const data = await response.json()
 			return data
@@ -23,16 +28,23 @@ const api = {
 		},
 	},
 	users: {
-		async getSingle(id = 1) {
-			const response = await fetch(`${baseUrl}/users/${id}`)
+		//Obtiene un usuario
+		async getUser(idUser = 1) {
+			const response = await fetch(`${baseUrl}/users/${idUser}`)
 			const data = await response.json()
 			return data
 		},
-		async getPosts(id = 1) {
-			const response = await fetch(`${baseUrl}/posts/?userId=${id}`)
+		//Obtiene los post de un usuario
+		async getPosts(idUser = 1){
+			const response = await fetch(`${baseUrl}/users/${idUser}/posts`)
 			const data = await response.json()
 			return data
 		},
+		async getAlbums(idUser = 1){
+			const response = await fetch(`${baseUrl}/users/${idUser}/albums`)
+			const data = await response.json()
+			return data
+		}
 	},
 }
 
