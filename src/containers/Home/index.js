@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 
 import api from '../../api/originalApi'
 import Post from '../Post'
@@ -8,8 +7,7 @@ class Home extends Component {
 
 	constructor(props){
 		super(props)
-		console.log('Constructor')
-
+		
 		this.state = {
 			page: 1,
 			posts: [],
@@ -18,33 +16,33 @@ class Home extends Component {
 	}
 
 	async componentDidMount() {
-		console.log('Cargando Post')
-		const posts = await api.posts.getList()
+		const posts = await api.posts.getAll()
 
 		this.setState({
 			posts,
-			page: this.state.page + 1,
 			loading: false,
 		})
 	}
 
 	render() {
+
+		const { loading, posts } = this.state
+
 		return (
 			<div>
 				<section name="Home">
 					<h1>Home</h1>
 					<section>
-						{this.state.loading && (
-							<h2>loading posts...</h2>
+						{loading && (
+							<h2>Loading posts...</h2>
 						)}
 
-						{this.state.posts
+						{posts
 							.map(post => 
 								<Post key={post.id} {...post} />
 							)}
 
 					</section>
-					<Link to="/about"> Go to about </Link>
 				</section>			
 			</div>
 		)
