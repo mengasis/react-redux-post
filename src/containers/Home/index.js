@@ -34,7 +34,7 @@ class Home extends Component {
 					<h1>Home</h1>
 					<section>
 						{loading && (
-							<h2>Loading posts...</h2>
+							<h2>Cargando posts...</h2>
 						)}
 
 						{posts
