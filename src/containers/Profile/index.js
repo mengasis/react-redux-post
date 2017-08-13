@@ -14,8 +14,6 @@ class Profile extends Component {
 	}
     
 	async componentDidMount() {
-		console.log(this.props)
-
 		const [
 			user
 		] = await Promise.all([
@@ -27,10 +25,13 @@ class Profile extends Component {
 		})
 	}
 
+
 	render() {
 
 		const { user } = this.state
-		console.log(user)
+		console.log(this.state.user)
+		//console.log(user.address.city)
+
 		return (
 			<div>
 				<h1>Profile: {user.name}</h1>
@@ -43,15 +44,17 @@ class Profile extends Component {
 					<p><strong>Sitio: </strong>{user.website}</p>
 				</fieldset>
 
-				<section>
-					<legend>Direccion</legend>
-					{console.log(user)}
-					<p><strong>Calle: </strong>{user.address.street}</p>
-					<p><strong>Suite: </strong>{user.address.suite}</p>
-					<p><strong>Ciudad: </strong>{user.address.city}</p>
-					<p><strong>Codigo Postal: </strong>{user.address.zipcode}</p>
-					<p><strong>Geolocalizacion: </strong>`${user.address.geo.lat} , ${user.address.geo.lng}`</p>
-				</section>
+				{user.address && (
+					<fieldset>
+						<legend>Direccion</legend>
+						<p><strong>Suite: </strong>{user.address.street}</p>
+						<p><strong>Suite: </strong>{user.address.suite}</p>
+						<p><strong>Ciudad: </strong>{user.address.city}</p>
+						<p><strong>Codigo Postal: </strong>{user.address.zipcode}</p>
+						<p><strong>Geolocalizacion: </strong>`${user.address.geo.lat} , ${user.address.geo.lng}`</p>
+					</fieldset>	
+				)}
+			
 			</div>
 		)
 	}
@@ -59,7 +62,7 @@ class Profile extends Component {
 
 Profile.propTypes = {
 	user: PropTypes.object,
-	params: PropTypes.object
+	match: PropTypes.object
 }
 
 export default Profile
