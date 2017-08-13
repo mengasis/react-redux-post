@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 import api from '../../api/originalApi'
 
@@ -14,8 +15,6 @@ class Profile extends Component {
 	}
     
 	async componentDidMount() {
-		console.log(this.props)
-
 		const [
 			user
 		] = await Promise.all([
@@ -27,31 +26,38 @@ class Profile extends Component {
 		})
 	}
 
+
 	render() {
 
 		const { user } = this.state
-		console.log(user)
+
 		return (
 			<div>
-				<h1>Profile: {user.name}</h1>
-				<h2></h2>
-				<fieldset>
-					<legend>Informacion Basica</legend>
-					<p><strong>Usuario: </strong>{user.username}</p>
-					<p><strong>Email: </strong>{user.email}</p>
-					<p><strong>Telefono: </strong>{user.phone}</p>
-					<p><strong>Sitio: </strong>{user.website}</p>
-				</fieldset>
+				<div>
+					<h1>Profile: {user.name}</h1>
+					<h2></h2>
+					<fieldset>
+						<legend><strong>Informacion Basica</strong></legend>
+						<p><strong>Usuario: </strong>{user.username}</p>
+						<p><strong>Email: </strong>{user.email}</p>
+						<p><strong>Telefono: </strong>{user.phone}</p>
+						<p><strong>Sitio: </strong>{user.website}</p>
+					</fieldset>
 
-				<section>
-					<legend>Direccion</legend>
-					{console.log(user)}
-					<p><strong>Calle: </strong>{user.address.street}</p>
-					<p><strong>Suite: </strong>{user.address.suite}</p>
-					<p><strong>Ciudad: </strong>{user.address.city}</p>
-					<p><strong>Codigo Postal: </strong>{user.address.zipcode}</p>
-					<p><strong>Geolocalizacion: </strong>`${user.address.geo.lat} , ${user.address.geo.lng}`</p>
-				</section>
+					{user.address && (
+						<fieldset>
+							<legend><strong>Dirección</strong></legend>
+							<p><strong>Suite: </strong>{user.address.street}</p>
+							<p><strong>Suite: </strong>{user.address.suite}</p>
+							<p><strong>Ciudad: </strong>{user.address.city}</p>
+							<p><strong>Codigo Postal: </strong>{user.address.zipcode}</p>
+							<p><strong>Geolocalizacion: </strong>{`${user.address.geo.lat} , ${user.address.geo.lng}`}</p>
+						</fieldset>	
+					)}
+				</div>
+				<div>
+					<Link to="/">Back</Link>
+				</div>
 			</div>
 		)
 	}
@@ -59,7 +65,7 @@ class Profile extends Component {
 
 Profile.propTypes = {
 	user: PropTypes.object,
-	params: PropTypes.object
+	match: PropTypes.object
 }
 
 export default Profile
