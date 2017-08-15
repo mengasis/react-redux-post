@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 import api from '../../api/originalApi'
 import Post from '../Post'
+import Loading from '../../shared/components/Loading'
 
 class Home extends Component {
 
@@ -34,7 +35,7 @@ class Home extends Component {
 					<h1>Home</h1>
 					<section>
 						{loading && (
-							<h2>Cargando posts...</h2>
+							<Loading />
 						)}
 
 						{posts
