@@ -44,20 +44,15 @@ class Profile extends Component {
 						<p><strong>Sitio: </strong>{user.website}</p>
 					</fieldset>
 
-					{user.address && (
-						<fieldset>
-							<legend><strong>Dirección</strong></legend>
-							<p><strong>Suite: </strong>{user.address.street}</p>
-							<p><strong>Suite: </strong>{user.address.suite}</p>
-							<p><strong>Ciudad: </strong>{user.address.city}</p>
-							<p><strong>Codigo Postal: </strong>{user.address.zipcode}</p>
-							<p><strong>Geolocalizacion: </strong>{`${user.address.geo.lat} , ${user.address.geo.lng}`}</p>
-						</fieldset>	
-					)}
-				</div>
-				<div>
-					<Link to="/">Back</Link>
-				</div>
+				<section>
+					<legend>Direccion</legend>
+					{console.log(user)}
+					<p><strong>Calle: </strong>{user.address.street}</p>
+					<p><strong>Suite: </strong>{user.address.suite}</p>
+					<p><strong>Ciudad: </strong>{user.address.city}</p>
+					<p><strong>Codigo Postal: </strong>{user.address.zipcode}</p>
+					<p><strong>Geolocalizacion: </strong>`${user.address.geo.lat} , ${user.address.geo.lng}`</p>
+				</section>
 			</div>
 		)
 	}
