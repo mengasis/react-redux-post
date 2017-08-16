@@ -19,11 +19,12 @@ class Home extends Component {
 	}
 
 	async componentDidMount() {
-		const posts = await api.posts.getAll()
+		const posts = await api.posts.getList(this.state.page)
 
 		this.setState({
 			posts,
 			loading: false,
+			page: this.state.page + 1	//Se pasara a la pagina dos para no considerar la primera pagina ya cargada.
 		})
 
 		window.addEventListener('scroll', this.handleScroll)
@@ -38,6 +39,32 @@ class Home extends Component {
 		// Si ya se estan cargando posts, retornara null para evitar hacer multiples request.
 		if(this.state.loading) return null
 
+		const scrolled = window.scrollY					//scrolleado por el usuario.
+		const viewportHeight = window.innerHeight		//alturna interna de la ventana del navegador.
+		const fullHeight = document.body.clientHeight	//altura de la pagina
+
+		//Si el usuario esta en los ultimos 300 pixeles de la pagina, se cargara otra pagina de posts. De lo contrario no carga nada.
+		if(!(scrolled + viewportHeight + 300 >= fullHeight)){
+			return null
+		}
+
+		this.setState({ loading: true},
+			async () => {
+				try {
+					const posts = await api.posts.getList(this.state.page)
+
+					this.setState({
+						posts: this.state.posts.concat(posts),
+						page: this.state.page + 1, //Al cargar la siguiente pagina, se agrega al contador.
+						loading: false
+					})
+
+				} catch (error) {
+					console.error(error)
+					this.setState({loading: false})
+				}
+			}
+		)
 	}
 
 	render() {
@@ -49,16 +76,16 @@ class Home extends Component {
 				<section name="Home">
 					<h1>Home</h1>
 					<section>
-						{loading && (
-							<Loading />
-						)}
-
 						{posts
 							.map(post => 
 								<Post key={post.id} {...post} />
 							)}
 
 					</section>
+
+					{loading && (
+						<Loading />
+					)}
 				</section>			
 			</div>
 		)
