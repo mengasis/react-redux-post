@@ -14,6 +14,8 @@ class Home extends Component {
 			posts: [],
 			loading: true,
 		}
+
+		this.handleScroll = this.handleScroll.bind(this)
 	}
 
 	async componentDidMount() {
@@ -23,6 +25,19 @@ class Home extends Component {
 			posts,
 			loading: false,
 		})
+
+		window.addEventListener('scroll', this.handleScroll)
+	}
+
+	// Se dejaran de escuchar los eventos que estan pendientes antes de que se desmonte el componente.
+	componentWillUnmount(){
+		window.removeEventListener('scroll', this.handleScroll)
+	}
+
+	handleScroll(){
+		// Si ya se estan cargando posts, retornara null para evitar hacer multiples request.
+		if(this.state.loading) return null
+
 	}
 
 	render() {
