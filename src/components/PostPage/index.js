@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 
 import api from '../../api/originalApi'
 import Post from '../../containers/Post'
+import Comment from '../../comments/components/Comment'
 
 class PostPage extends Component {
 
@@ -37,7 +38,7 @@ class PostPage extends Component {
 
 	render() {
 
-		const { loading, user, comments } = this.state
+		const { loading, user, comments, post } = this.state
 
 		if(loading){
 			return <Loading />
@@ -46,10 +47,20 @@ class PostPage extends Component {
 		return (
 			<section name="post">
 				<Post 
-					{...this.state.post}
+					{...post}
 					user={user}
 					comments={comments}
 				/>
+
+				<section name="comments">
+
+					{comments
+						.map(comment => (
+							<Comment key={comment.id} {...comment} />
+						))}
+
+				</section>
+
 				<Link to="/"><h3>{'<- Go Back'}</h3></Link>
 			</section>
 		)
