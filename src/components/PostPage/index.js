@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Loading from '../../shared/components/Loading'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 import api from '../../api/originalApi'
 import Post from '../../containers/Post'
@@ -49,6 +50,7 @@ class PostPage extends Component {
 					user={user}
 					comments={comments}
 				/>
+				<Link to="/"><h3>{'<- Go Back'}</h3></Link>
 			</section>
 		)
 	}

@@ -68,7 +68,7 @@ Post.propTypes= {
 	title: PropTypes.string,
 	body: PropTypes.string,
 	user: PropTypes.object,
-	comments: PropTypes.object
+	comments: PropTypes.array
 }
 
 export default Post
