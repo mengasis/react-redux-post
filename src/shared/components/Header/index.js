@@ -18,7 +18,8 @@ App Post React Redux
 					<a
 						className={styles.link}
 						href="https://github.com/mengasis/react-redux-post"
-						target="_blank">
+						target="_blank"
+						rel="noopener noreferrer">
                 Github
 					</a>
 				</nav>

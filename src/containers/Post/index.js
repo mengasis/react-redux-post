@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import api from '../../api/originalApi'
-
+import styles from './Post.css'
 
 class Post extends Component {
 	constructor(props){
@@ -44,17 +44,19 @@ class Post extends Component {
 		const { user, comments, loading } = this.state
         
 		return(
-			<article id={`post-${id}`}>
-				<Link to={`/posts/${id}`}><h2>{title}</h2></Link>
-				<p>{body}</p>
+			<article id={`post-${id}`} className={styles.post}>
+				<h2 className={styles.title}>
+					<Link to={`/posts/${id}`}>{title}</Link>
+				</h2>
+				<p className={styles.body}>{body}</p>
                 
 				{!loading && (
-					<div>
+					<div className={styles.meta}>
 						
-						<Link to={`/user/${userId}`}>
+						<Link to={`/user/${userId}`} className={styles.user}>
 							{user.name}
 						</Link>
-						<span> - Hay {comments.length} comentarios</span>
+						<span className={styles.comments}>Hay {comments.length} comentarios</span>
 					</div>
 				)}
 			</article>
