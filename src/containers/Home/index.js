@@ -4,6 +4,8 @@ import api from '../../api/originalApi'
 import Post from '../Post'
 import Loading from '../../shared/components/Loading'
 
+import styles from './Home.css'
+
 class Home extends Component {
 
 	constructor(props){
@@ -73,9 +75,8 @@ class Home extends Component {
 
 		return (
 			<div>
-				<section name="Home">
-					<h1>Home</h1>
-					<section>
+				<section name="Home" className={styles.section}>
+					<section className={styles.list}>
 						{posts
 							.map(post => 
 								<Post key={post.id} {...post} />
