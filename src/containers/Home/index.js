@@ -3,7 +3,8 @@ import React, { Component } from 'react'
 import api from '../../api/originalApi'
 import Post from '../Post'
 import Loading from '../../shared/components/Loading'
-import Header from '../../shared/components/Header'
+
+import styles from './Home.css'
 
 class Home extends Component {
 
@@ -74,9 +75,8 @@ class Home extends Component {
 
 		return (
 			<div>
-				<section name="Home">
-					<Header />
-					<section>
+				<section name="Home" className={styles.section}>
+					<section className={styles.list}>
 						{posts
 							.map(post => 
 								<Post key={post.id} {...post} />
