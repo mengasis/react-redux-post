@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 import api from '../../../../lib/originalApi'
 import Post from '../../../shared/components/Post'
 import Loading from '../../../shared/components/Loading'
+
+import actions from '../../../actions'
 
 import styles from './Home.css'
 
@@ -11,23 +15,17 @@ class Home extends Component {
 	constructor(props){
 		super(props)
 		
-		this.state = {
-			page: 1,
-			posts: [],
-			loading: true,
-		}
+		this.state = { loading: true }
 
 		this.handleScroll = this.handleScroll.bind(this)
 	}
 
 	async componentDidMount() {
-		const posts = await api.posts.getList(this.state.page)
+		const posts = await api.posts.getList(this.props.page)
 
-		this.setState({
-			posts,
-			loading: false,
-			page: this.state.page + 1	//Se pasara a la pagina dos para no considerar la primera pagina ya cargada.
-		})
+		this.props.dispatch(actions.addPost(posts))
+
+		this.setState({ loading: false })
 
 		window.addEventListener('scroll', this.handleScroll)
 	}
@@ -53,13 +51,11 @@ class Home extends Component {
 		this.setState({ loading: true},
 			async () => {
 				try {
-					const posts = await api.posts.getList(this.state.page)
+					const posts = await api.posts.getList(this.props.page)
 
-					this.setState({
-						posts: this.state.posts.concat(posts),
-						page: this.state.page + 1, //Al cargar la siguiente pagina, se agrega al contador.
-						loading: false
-					})
+					this.props.dispatch(actions.addPost(posts))					
+
+					this.setState({ loading: false })
 
 				} catch (error) {
 					console.error(error)
@@ -71,7 +67,8 @@ class Home extends Component {
 
 	render() {
 
-		const { loading, posts } = this.state
+		const { loading } = this.state
+		const { posts } = this.props
 
 		return (
 			<div>
@@ -93,4 +90,17 @@ class Home extends Component {
 	}
 }
 
-export default Home
+Home.propTypes = {
+	page: PropTypes.number,
+	posts: PropTypes.arrayOf(PropTypes.object),
+	dispatch: PropTypes.func
+}
+
+const mapStateToProps = (state) => {
+	return {
+		posts: state.posts.entities,
+		page: state.posts.page
+	}
+}
+
+export default connect(mapStateToProps)(Home)
