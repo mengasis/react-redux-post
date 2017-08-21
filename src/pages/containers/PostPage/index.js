@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import Loading from '../../shared/components/Loading'
+import Loading from '../../../shared/components/Loading'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
-import api from '../../api/originalApi'
-import Post from '../../containers/Post'
-import Comment from '../../comments/components/Comment'
+import api from '../../../../lib/originalApi'
+import Post from '../../../shared/components/Post'
+import Comment from '../../../comments/components/Comment'
 
 class PostPage extends Component {
 

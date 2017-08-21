@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
-import api from '../../api/originalApi'
+import api from '../../../../lib/originalApi'
 
 class Profile extends Component {
 

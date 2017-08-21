@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 
-import api from '../../api/originalApi'
-import Post from '../Post'
-import Loading from '../../shared/components/Loading'
+import api from '../../../../lib/originalApi'
+import Post from '../../../shared/components/Post'
+import Loading from '../../../shared/components/Loading'
 
 import styles from './Home.css'
 

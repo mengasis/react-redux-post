@@ -3,8 +3,8 @@ import React from 'react'
 import { renderToString, renderToStaticMarkup } from 'react-dom/server'
 import { StaticRouter } from 'react-router-dom'
 
-import AppRoutes from './containers/AppRoutes'
-import Layout from './components/Layout'
+import AppRoutes from './pages'
+import Layout from './pages/components/Layout'
 
 const requestHandler = (req, res) => {
 

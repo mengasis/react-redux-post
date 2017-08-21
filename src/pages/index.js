@@ -1,11 +1,11 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 
-import Home from '../Home'
-import Page404 from '../../components/Page404'
-import Profile from '../Profile'
-import Post from '../../components/PostPage'
-import Header from '../../shared/components/Header'
+import Home from './containers/Home'
+import Page404 from './components/Page404'
+import Profile from './containers/Profile'
+import Post from './containers/PostPage'
+import Header from '../shared/components/Header'
 
 const AppRoutes = () =>
 	<div>
