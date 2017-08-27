@@ -1,3 +1,5 @@
+import types from './actionTypes'
+
 const initialState = {
 	posts: {
 		page: 1,
@@ -9,7 +11,7 @@ const initialState = {
 
 function reducer(state = initialState, action = {}){
 	switch (action.type) {
-	case 'ADD_POST':
+	case types.SET_POST:
             
 		return Object.assign({}, state, {
 			posts: Object.assign({}, state.posts, {
