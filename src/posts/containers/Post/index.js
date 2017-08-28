@@ -19,7 +19,7 @@ class Post extends Component {
 	async componentDidMount() {
 
 		// Si vienen los datos (si es que fueron pasados por props) se detendra el fetch
-		if(!!this.props.user && !!this.props.comments)
+		if(this.props.user && !!this.props.comments.size > 0)
 			return this.setState({ loading: false})
 
 		await Promise.all([
@@ -45,10 +45,10 @@ class Post extends Component {
 				{!loading && (
 					<div className={styles.meta}>
 						
-						<Link to={`/user/${user.id}`} className={styles.user}>
-							{user.name}
+						<Link to={`/user/${user.get('id')}`} className={styles.user}>
+							{user.get('name')}
 						</Link>
-						<span className={styles.comments}>Hay {comments.length} comentarios</span>
+						<span className={styles.comments}>Hay {comments.size} comentarios</span>
 					</div>
 				)}
 			</article>
@@ -63,16 +63,26 @@ Post.propTypes= {
 	body: PropTypes.string,
 	user: PropTypes.shape({
 		id: PropTypes.number,
-		name: PropTypes.string
+		name: PropTypes.string,
+		size: PropTypes.number,
+		get: PropTypes.func
 	}),
-	comments: PropTypes.arrayOf(PropTypes.object),
+	comments: PropTypes.shape({
+		size: PropTypes.number,
+		get: PropTypes.func,
+		map: PropTypes.func
+	}),
 	actions: PropTypes.objectOf(PropTypes.func)
 }
 
 const mapStateToProps = (state, ownProps) => {
 	return {
-		user: state.users[ownProps.userId], //Se necesita solo el usuario del Post
-		comments: state.comments.filter(comment => comment.postId === ownProps.id) //Solo es necesario los comentarios del Post
+		user: state
+			.get('users')
+			.get(ownProps.userId),
+		comments: state
+			.get('comments')
+			.filter(comment => comment.get('postId') === ownProps.id)
 	}
 }
 
