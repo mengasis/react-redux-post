@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 import api from '../../../../lib/originalApi'
-import Post from '../../../shared/components/Post'
+import Post from '../../../posts/containers/Post'
 import Comment from '../../../comments/components/Comment'
 
 class PostPage extends Component {

@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { bindActionCreators } from 'redux'
 
-import api from '../../../../lib/originalApi'
-import Post from '../../../shared/components/Post'
+import Post from '../../../posts/containers/Post'
 import Loading from '../../../shared/components/Loading'
 
 import actions from '../../../actions'
@@ -21,10 +21,7 @@ class Home extends Component {
 	}
 
 	async componentDidMount() {
-		const posts = await api.posts.getList(this.props.page)
-
-		this.props.dispatch(actions.addPost(posts))
-
+		await this.props.actions.postNextPage()							
 		this.setState({ loading: false })
 
 		window.addEventListener('scroll', this.handleScroll)
@@ -51,10 +48,7 @@ class Home extends Component {
 		this.setState({ loading: true},
 			async () => {
 				try {
-					const posts = await api.posts.getList(this.props.page)
-
-					this.props.dispatch(actions.addPost(posts))					
-
+					await this.props.actions.postNextPage()					
 					this.setState({ loading: false })
 
 				} catch (error) {
@@ -76,8 +70,9 @@ class Home extends Component {
 					<section className={styles.list}>
 						{posts
 							.map(post => 
-								<Post key={post.id} {...post} />
-							)}
+								<Post key={post.get('id')} {...post.toJS()} />)
+							.toArray()
+						}
 
 					</section>
 
@@ -91,16 +86,24 @@ class Home extends Component {
 }
 
 Home.propTypes = {
-	page: PropTypes.number,
-	posts: PropTypes.arrayOf(PropTypes.object),
-	dispatch: PropTypes.func
+	posts: PropTypes.shape({
+		size: PropTypes.number,
+		get: PropTypes.func,
+		map: PropTypes.func
+	}),
+	actions: PropTypes.objectOf(PropTypes.func)
 }
 
 const mapStateToProps = (state) => {
 	return {
-		posts: state.posts.entities,
-		page: state.posts.page
+		posts: state.get('posts').get('entities')
 	}
 }
 
-export default connect(mapStateToProps)(Home)
+const mapDispatchToProps = (dispatch) => {
+	return {
+		actions: bindActionCreators(actions, dispatch)
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home)
