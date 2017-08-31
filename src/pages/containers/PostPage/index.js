@@ -21,6 +21,9 @@ class PostPage extends Component {
 	}
 
 	async componentDidMount() {
+
+		document.title = 'Post Detail'		
+		
 		const [ post, comments ] = await Promise.all([
 			api.posts.getPost(this.props.match.params.id),
 			api.posts.getComments(this.props.match.params.id)

@@ -24,6 +24,8 @@ class Home extends Component {
 		await this.props.actions.postNextPage()							
 		this.setState({ loading: false })
 
+		document.title = 'Home'		
+
 		window.addEventListener('scroll', this.handleScroll)
 	}
 

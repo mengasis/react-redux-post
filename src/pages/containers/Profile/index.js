@@ -15,6 +15,9 @@ class Profile extends Component {
 	}
     
 	async componentDidMount() {
+
+		document.title = 'Profile Detail'				
+
 		const [
 			user
 		] = await Promise.all([
