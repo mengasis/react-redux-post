@@ -40,9 +40,9 @@ function postNextPage(){
 
 //Trae el usuario
 function loadUser(userId) {
+	
 	return async (dispatch) => {
 		const user = await api.users.getUser(userId)
-
 		dispatch(setUser(user))
 
 		return user
