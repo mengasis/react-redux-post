@@ -2,12 +2,12 @@ import types from './actionTypes'
 import api from '../lib/originalApi'
 
 function setPost(post) {
+
 	return {
 		type: types.SET_POST,
 		payload: post,
 	}
 }
-
 
 function setComments(comments) {
 	return {
@@ -40,12 +40,22 @@ function postNextPage(){
 
 //Trae el usuario
 function loadUser(userId) {
-	
 	return async (dispatch) => {
 		const user = await api.users.getUser(userId)
 		dispatch(setUser(user))
 
 		return user
+	}
+}
+
+//Trae el post segun id
+function loadPost(postId){
+	return async (dispatch) => {
+		const post = await api.posts.getPost(postId)
+		
+		dispatch(setPost(post))
+
+		return post
 	}
 }
 
@@ -68,5 +78,6 @@ export default {
 	//Acciones Asincronas
 	postNextPage,
 	loadUser,
+	loadPost,
 	loadCommentsForPost
 }

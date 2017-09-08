@@ -2,10 +2,13 @@ import React, { Component } from 'react'
 import Loading from '../../../shared/components/Loading'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
-import api from '../../../../lib/originalApi'
 import Post from '../../../posts/containers/Post'
 import Comment from '../../../comments/components/Comment'
+import actions from '../../../actions'
+
 
 class PostPage extends Component {
 
@@ -13,35 +16,24 @@ class PostPage extends Component {
 		super(props)
 
 		this.state = {
-			loading: true,
-			user: {},
-			post: {},
-			comments: []
+			loading: true
 		}
 	}
 
 	async componentDidMount() {
 
-		document.title = 'Post Detail'		
-		
-		const [ post, comments ] = await Promise.all([
-			api.posts.getPost(this.props.match.params.id),
-			api.posts.getComments(this.props.match.params.id)
-		])
+		document.title = 'Post Detail'
+		await this.props.actions.loadPost(this.props.match.params.id)
+		//await this.props.actions.loadCommentsForPost(post.id)
+		//await this.props.actions.loadUser(post.userId)
 
-		const user = await api.users.getUser(post.userId)
-
-		this.setState({
-			loading: false,
-			user,
-			post,
-			comments
-		})
+		this.setState({ loading: false })
 	}
 
 	render() {
 
-		const { loading, user, comments, post } = this.state
+		//const { user, comments, post } = this.props
+		const { loading } = this.state
 
 		if(loading){
 			return <Loading />
@@ -49,12 +41,16 @@ class PostPage extends Component {
 
 		return (
 			<section name="post">
+
+				{/*
 				<Post 
 					{...post}
 					user={user}
 					comments={comments}
 				/>
+				/*}
 
+				{/*
 				<section name="comments">
 
 					{comments
@@ -63,7 +59,7 @@ class PostPage extends Component {
 						))}
 
 				</section>
-
+				*/}
 				<Link to="/"><h3>{'<- Go Back'}</h3></Link>
 			</section>
 		)
@@ -71,11 +67,51 @@ class PostPage extends Component {
 }
 
 PostPage.propTypes = {
+	user: PropTypes.shape({
+		id: PropTypes.number,
+		name: PropTypes.string,
+		size: PropTypes.number,
+		get: PropTypes.func
+	}),
+	post: PropTypes.shape({
+		id: PropTypes.number,
+		userId: PropTypes.number,
+		title: PropTypes.string,
+		body: PropTypes.string,
+	}),	
+	comments: PropTypes.shape({
+		id: PropTypes.number,
+		name: PropTypes.string,
+		postId: PropTypes.number
+	}),
 	match: PropTypes.shape({
 		params: PropTypes.shape({
 			id: PropTypes.string,
 		})
-	})
+	}),
+	actions: PropTypes.objectOf(PropTypes.func)
 }
 
-export default PostPage
+const mapStateToProps = (state, ownProps) => {
+	return {
+		post: state
+			.get('posts')
+			.get('entities')
+			//.filter(entity => entity.get('id') === Number(ownProps.match.params.id)),
+		/*
+		user: state
+			.get('users')
+			.get(Number(ownProps.match.params.id)),
+		comments: state
+			.get('comments')
+			*/
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		actions: bindActionCreators(actions, dispatch)
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostPage)

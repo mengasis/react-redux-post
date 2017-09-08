@@ -63,7 +63,6 @@ class Profile extends Component {
 }
 
 Profile.propTypes = {
-	users: PropTypes.object,
 	user: PropTypes.shape({
 		id: PropTypes.number,
 		name: PropTypes.string,

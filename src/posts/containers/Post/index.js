@@ -57,10 +57,13 @@ class Post extends Component {
 }
 
 Post.propTypes= {
+	//Props pasados anteriormente
 	id: PropTypes.number,
 	userId: PropTypes.number,
 	title: PropTypes.string,
 	body: PropTypes.string,
+
+	//Props del Store
 	user: PropTypes.shape({
 		id: PropTypes.number,
 		name: PropTypes.string,
