@@ -43,21 +43,19 @@ class PostPage extends Component {
 		return (
 			<section name="post">
 				<Post 
-					{...post}
-					user={user}
-					comments={comments}
+					{...post.toJS()}
 				/>
 
-				{/*
 				<section name="comments">
-
+					<h3>Comments</h3>
 					{comments
+						.valueSeq()
 						.map(comment => (
-							<Comment key={comment.id} {...comment} />
+							<Comment key={comment.get('id')} {...comment.toJS()} />
 						))}
 
 				</section>
-				*/}
+
 				<Link to="/"><h3>{'<- Go Back'}</h3></Link>
 			</section>
 		)
