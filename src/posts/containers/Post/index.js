@@ -24,7 +24,7 @@ class Post extends Component {
 
 		await Promise.all([
 			this.props.actions.loadUser(this.props.userId),
-			this.props.actions.loadCommentsForPost(this.props.id)
+			this.props.actions.loadCommentsForPost(this.props.post.id)
 		])
 
 		this.setState({loading: false})
@@ -32,15 +32,15 @@ class Post extends Component {
     
 	render() {
 
-		const { id, title, body, user, comments } = this.props
+		const { user, post, comments } = this.props
 		const { loading } = this.state
-        
+		
 		return(
-			<article id={`post-${id}`} className={styles.post}>
+			<article id={`post-${post.get('id')}`} className={styles.post}>
 				<h2 className={styles.title}>
-					<Link to={`/posts/${id}`}>{title}</Link>
+					<Link to={`/posts/${post.get('id')}`}>{post.get('title')}</Link>
 				</h2>
-				<p className={styles.body}>{body}</p>
+				<p className={styles.body}>{post.get('body')}</p>
                 
 				{!loading && (
 					<div className={styles.meta}>
@@ -58,11 +58,13 @@ class Post extends Component {
 
 Post.propTypes= {
 	//Props pasados anteriormente
-	id: PropTypes.number,
-	userId: PropTypes.number,
-	title: PropTypes.string,
-	body: PropTypes.string,
 
+	post: PropTypes.shape({
+		id: PropTypes.number,
+		userId: PropTypes.number,
+		title: PropTypes.string,
+		body: PropTypes.string,
+	}),
 	//Props del Store
 	user: PropTypes.shape({
 		id: PropTypes.number,
@@ -78,14 +80,21 @@ Post.propTypes= {
 	actions: PropTypes.objectOf(PropTypes.func)
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
+
+	let post = state
+		.get('posts')
+		.get('entities')
+		.get(state.get('currentPost'))
+
 	return {
+		post: post,
 		user: state
 			.get('users')
-			.get(ownProps.userId),
+			.get(post.get('userId')),
 		comments: state
 			.get('comments')
-			.filter(comment => comment.get('postId') === ownProps.id)
+			.filter(comment => comment.get('postId') === post.get('id')),
 	}
 }
 

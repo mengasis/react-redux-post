@@ -9,6 +9,13 @@ function setPost(post) {
 	}
 }
 
+function setSinglePost(post){
+	return {
+		type: types.SET_SINGLE_POST,
+		payload: post
+	}
+}
+
 function setComments(comments) {
 	return {
 		type: types.SET_COMMENTS,
@@ -53,7 +60,7 @@ function loadPost(postId){
 	return async (dispatch) => {
 		const post = await api.posts.getPost(postId)
 		
-		dispatch(setPost(post))
+		dispatch(setSinglePost(post))
 
 		return post
 	}

@@ -23,32 +23,30 @@ class PostPage extends Component {
 	async componentDidMount() {
 
 		document.title = 'Post Detail'
-		await this.props.actions.loadPost(this.props.match.params.id)
-		//await this.props.actions.loadCommentsForPost(post.id)
-		//await this.props.actions.loadUser(post.userId)
+		const post = await this.props.actions.loadPost(this.props.match.params.id)
+		await this.props.actions.loadCommentsForPost(post.id)
+		await this.props.actions.loadUser(post.userId)
 
 		this.setState({ loading: false })
 	}
 
 	render() {
 
-		//const { user, comments, post } = this.props
+		const { user, comments, post } = this.props
 		const { loading } = this.state
 
 		if(loading){
 			return <Loading />
 		}
 
+
 		return (
 			<section name="post">
-
-				{/*
 				<Post 
 					{...post}
 					user={user}
 					comments={comments}
 				/>
-				/*}
 
 				{/*
 				<section name="comments">
@@ -93,18 +91,18 @@ PostPage.propTypes = {
 }
 
 const mapStateToProps = (state, ownProps) => {
+
 	return {
 		post: state
 			.get('posts')
 			.get('entities')
-			//.filter(entity => entity.get('id') === Number(ownProps.match.params.id)),
-		/*
+			.get(Number(ownProps.match.params.id)),
 		user: state
 			.get('users')
 			.get(Number(ownProps.match.params.id)),
 		comments: state
 			.get('comments')
-			*/
+			
 	}
 }
 
