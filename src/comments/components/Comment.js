@@ -2,18 +2,20 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
+import styles from './Comment.css'
+
 class Comment extends Component {
 	render() {
 
 		const { id, name, email, body } = this.props
 
 		return (
-			<article id={`comment-${id}`} >
+			<article id={`comment-${id}`} className={styles.borderComment}>
 				<div>
-                    Escrito por: <Link to={`mailto:${email}`}>{ `${name} (${email})` }</Link>
+					<strong>Escrito por:</strong> <Link to={`mailto:${email}`}>{ `${name} (${email})` }</Link>
 				</div>
                 
-				<p>
+				<p className={styles.body}>
 					{body}
 				</p>
 			</article>

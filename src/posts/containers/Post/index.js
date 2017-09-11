@@ -34,7 +34,7 @@ class Post extends Component {
 
 		const { id, title, body, user, comments } = this.props
 		const { loading } = this.state
-        
+		
 		return(
 			<article id={`post-${id}`} className={styles.post}>
 				<h2 className={styles.title}>
@@ -57,10 +57,13 @@ class Post extends Component {
 }
 
 Post.propTypes= {
+	//Props pasados anteriormente
 	id: PropTypes.number,
 	userId: PropTypes.number,
 	title: PropTypes.string,
 	body: PropTypes.string,
+
+	//Props del Store
 	user: PropTypes.shape({
 		id: PropTypes.number,
 		name: PropTypes.string,

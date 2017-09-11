@@ -71,6 +71,7 @@ class Home extends Component {
 				<section name="Home" className={styles.section}>
 					<section className={styles.list}>
 						{posts
+							.valueSeq()
 							.map(post => 
 								<Post key={post.get('id')} {...post.toJS()} />)
 							.toArray()

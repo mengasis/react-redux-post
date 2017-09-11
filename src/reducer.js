@@ -9,6 +9,7 @@ const initialState = fromJS({
 	},
 	comments: {},
 	users: {},
+	currentPost: null
 })
 
 function postPageReducer(state = initialState.get('posts').get('page'), action = {}){
@@ -28,6 +29,20 @@ function postEntitiesReducer(state = initialState.get('posts').get('entities'), 
 				(posts, post) => posts.set(post.id, map(post)),
 				state
 			)
+
+	case types.SET_SINGLE_POST:
+		return state.set(action.payload.id, map(action.payload))
+
+	default:
+		return state
+	}
+}
+
+function currentPostReducer(state = initialState.get('currentPost'), action = {}){
+	switch (action.type) {
+	case types.SET_SINGLE_POST:
+		return action.payload.id
+	
 	default:
 		return state
 	}
@@ -62,7 +77,8 @@ const postsReducer = combineReducers({
 const reducer = combineReducers({
 	posts: postsReducer,
 	comments: commentsReducer,
-	users: usersReducer
+	users: usersReducer,
+	currentPost: currentPostReducer
 })
 
 export default reducer
