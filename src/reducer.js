@@ -7,6 +7,10 @@ const initialState = fromJS({
 		page: 1,
 		entities: {},
 	},
+	gallery: {
+		page: 1,
+		images: {},
+	},
 	comments: {},
 	users: {},
 	currentPost: null
@@ -69,6 +73,32 @@ function usersReducer(state = initialState.get('users'), action = {}){
 	}
 }
 
+function galleryPageReducer(state = initialState.get('gallery').get('page'), action = {}){
+	switch (action.type) {
+	case types.SET_IMAGE:
+		return state + 1
+	default:
+		return state
+	}
+}
+
+function galleryImagesReducer(state = initialState.get('gallery').get('images'), action = {}){
+	switch (action.type) {
+	case types.SET_IMAGE:
+		return action.payload.reduce(
+			(images, image) => images.set(image.id, map(image)),
+			state
+		)
+	default:
+		return state
+	}
+}
+
+const galleryReducer = combineReducers({
+	page: galleryPageReducer,
+	images: galleryImagesReducer
+})
+
 const postsReducer = combineReducers({
 	page: postPageReducer,
 	entities: postEntitiesReducer
@@ -78,7 +108,8 @@ const reducer = combineReducers({
 	posts: postsReducer,
 	comments: commentsReducer,
 	users: usersReducer,
-	currentPost: currentPostReducer
+	currentPost: currentPostReducer,
+	gallery: galleryReducer
 })
 
 export default reducer

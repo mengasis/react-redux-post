@@ -8,19 +8,22 @@ class Header extends Component {
 		return (
 			<header className={styles.header}>
 				<h1 className={styles.title}>
-App Post React Redux
+				App Post React Redux
 				</h1>
       
 				<nav role="navigation" className={styles.navigation}>
 					<Link to="/" className={styles.link}>
-                Home
+					Home
+					</Link>
+					<Link to="/gallery" className={styles.link}>
+					Gallery
 					</Link>
 					<a
 						className={styles.link}
 						href="https://github.com/mengasis/react-redux-post"
 						target="_blank"
 						rel="noopener noreferrer">
-                Github
+						Github
 					</a>
 				</nav>
 			</header>

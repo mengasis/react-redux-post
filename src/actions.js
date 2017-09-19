@@ -30,6 +30,13 @@ function setUser(user) {
 	}
 }
 
+function setImages(image) {
+	return {
+		type: types.SET_IMAGE,
+		payload: image
+	}
+}
+
 //Acción para pasar a la siguiente pagina en los post
 function postNextPage(){
 	return async (dispatch, getState) => {
@@ -77,6 +84,21 @@ function loadCommentsForPost(postId) {
 	}
 }
 
+function loadNextGallery() {
+	console.log('Entrando a la accion')
+	return async (dispatch, getState) => {
+
+		const state = getState()
+		const currentPage = state.get('gallery').get('page')
+
+		const images = await api.gallery.getPage(currentPage)
+
+		dispatch(setImages(images))
+
+		return images
+	}
+}
+
 export default {
 	setPost,
 	setComments,
@@ -86,5 +108,6 @@ export default {
 	postNextPage,
 	loadUser,
 	loadPost,
-	loadCommentsForPost
+	loadCommentsForPost,
+	loadNextGallery
 }
