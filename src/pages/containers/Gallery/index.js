@@ -72,8 +72,9 @@ class Gallery extends Component {
                     
 					<section>
 						{images
+							.valueSeq()
 							.map(image =>
-								<Image key={image.get('id')} source={image.get('url')} />
+								<img key={image.get('id')} src={image.get('url')} />
 							)}
 					</section>
                     
